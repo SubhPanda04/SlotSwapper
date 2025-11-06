@@ -91,7 +91,7 @@ router.get('/incoming', protect, async (req, res) => {
       .populate('requesterId', 'name email')
       .populate('requestedSlotId')
       .populate('offeredSlotId');
-    const incoming = requests.filter(req => req.requestedSlotId.userId.toString() === req.user._id.toString());
+    const incoming = requests.filter(swapReq => swapReq.requestedSlotId && swapReq.requestedSlotId.userId.toString() === req.user._id.toString());
     res.json(incoming);
   } catch (error) {
     res.status(500).json({ message: error.message });
